@@ -1,0 +1,53 @@
+package com.poash;
+
+public class Car {
+	
+	public Car(String manufacturer, float fuel, int regNum) {
+		this.fuel = fuel;
+		this.manufacturer = manufacturer; 
+		this.registrationNum = regNum; 
+		this.speed = 0;
+		this.isRunning = false;
+	}
+	
+	private String manufacturer; 
+	private float fuel; 
+	private float speed; 
+	private int registrationNum;
+	private boolean isRunning;
+	
+	
+	
+	void switchOff() {
+		this.isRunning = false;
+		
+	}
+	
+	void switchOn() {
+		this.isRunning = true;
+		
+	}
+	
+	void accelerate() {
+		if(!this.isRunning) {
+			return;
+		}
+		
+		this.speed++;
+		this.fuel -= 0.5f;
+		
+	}
+	
+	void brake() {
+		if(this.speed>0) {
+			this.speed=0;
+		}
+		
+	}
+	
+	public void dashboard() {
+		System.out.println("speed: " + this.speed + "and fuel: "+ this.fu);
+		
+	}
+
+}

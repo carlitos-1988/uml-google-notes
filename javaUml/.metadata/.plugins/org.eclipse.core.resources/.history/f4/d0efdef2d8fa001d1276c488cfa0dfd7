@@ -1,0 +1,22 @@
+package com.poash;
+
+public class Program {
+	
+	public static void main(String[] args) {
+
+	FireHydrant fh = new FireHydrant();
+	
+	fh.setName("FireHydrant");
+	fh.setDamage(100);
+	
+	GameObject go = fh;
+	
+	go.setName("Second hydrant");
+	
+	System.out.println(fh.getName());
+	
+	
+	
+	}
+	
+}

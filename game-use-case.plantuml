@@ -1,0 +1,10 @@
+@startuml gamestart
+
+skinparam Style strictuml
+
+
+(start game)
+
+
+@enduml
+

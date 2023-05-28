@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<dirs>
+    <entry loc="/Applications/SpringToolSuite4.app/Contents/Eclipse/plugins/org.eclipse.justj.openjdk.hotspot.jre.full.macosx.x86_64_15.0.2.v20210201-0955/jre" stamp="1615467087000"/>
+    <entry loc="/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home" stamp="1603416250000"/>
+    <entry loc="/Applications/SpringToolSuite4.app/Contents/Eclipse/plugins/org.eclipse.justj.openjdk.hotspot.jre.full.macosx.x86_64_15.0.2.v20210201-0955" stamp="1615467087000"/>
+    <entry loc="/Library/Java/JavaVirtualMachines/temurin-20.jdk/Contents/Home" stamp="1681943990000"/>
+    <entry loc="/Library/Java/JavaVirtualMachines/openjdk-14.0.2.jdk/Contents/Home" stamp="1594258316000"/>
+    <entry loc="/Library/Java/JavaVirtualMachines/amazon-corretto-11.jdk/Contents/Home" stamp="1573607422000"/>
+    <entry loc="/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home" stamp="1655394828000"/>
+</dirs>

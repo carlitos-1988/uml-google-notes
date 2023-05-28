@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="3c38cc13-c4be-4d24-8a64-6610786f1703" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectId" id="2QIhVVRdfUocuSiBnomOruxYz4g" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="com.uml.java.Main" />
+      <module name="UMLGame" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3c38cc13-c4be-4d24-8a64-6610786f1703" name="Default Changelist" comment="" />
+      <created>1685047027423</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1685047027423</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="2493" y="233" key="#com.intellij.ide.util.MemberChooser" timestamp="1685048534848">
+      <screen x="1728" y="25" width="1920" height="1055" />
+    </state>
+    <state x="2493" y="233" key="#com.intellij.ide.util.MemberChooser/0.38.1728.1079/1728.25.1920.1055@1728.25.1920.1055" timestamp="1685048534848" />
+    <state x="494" y="451" key="com.intellij.ide.util.TipDialog" timestamp="1685248800174">
+      <screen x="0" y="38" width="1728" height="1079" />
+    </state>
+    <state x="2277" y="429" key="com.intellij.ide.util.TipDialog/0.38.1728.1079/1728.25.1920.1055@1728.25.1920.1055" timestamp="1685047072818" />
+    <state x="494" y="451" key="com.intellij.ide.util.TipDialog/0.38.1728.1079@0.38.1728.1079" timestamp="1685248800174" />
+  </component>
+</project>

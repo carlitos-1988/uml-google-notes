@@ -1,0 +1,19 @@
+package com.poash;
+
+public class Program {
+	
+	public static void main(String[] args) {
+
+	Car car = new Car();
+	
+	car.switchOn();
+	car.accelerate();
+	car.accelerate();
+	car.accelerate();
+	car.dashboard();
+	
+	
+	
+	}
+	
+}
