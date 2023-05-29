@@ -538,3 +538,47 @@ Extend Relationship - Used to specify optional behavior. Independent of the main
 - Destroy message destroys the instance
 - It is shown as stereotype << destroy >>
   - can be used to show explicit destruction of objects e.g. in C++, we use delete to destroy a heap-based object
+
+### Sequence Diagram Part II
+
+- Sequence diagrams also depict loops, conditional execution, alternative execution, etc
+  - Can quickly grow and become unmanageable
+- These interactions can be shown through fragments
+- A fragment is a box that encloses the portion of the interaction
+  - can contain any number of interactions
+  - can contain other fragments
+
+Fragment Types:
+
+- `ref`: used to represent an interaction that is defined elsewhere in the model
+  - useful when the sequence diagram has too many interactions
+- `loop`: loops through interactions within the fragment any number of times (condition is shown as a guard statement)
+- `break`: used to break out of a loop fragment (similar to break statement)
+- `opt`: the interaction in this fragment is executed only if the guard condition is true
+
+Sequence Vs communication Diagram
+
+- Sequence Diagram:
+  - Shows the sequence of ordering of messages
+  - Large set of detailed notations
+  - Consumes horizontal space
+  - Difficult to use during brain storming
+  - Message order is depicted clearly
+- Communication Diagram
+  - Focus on the links and the organization of objects
+  - Fewer notation options
+  - Requires less space
+  - Easy and flexible to draw during brain storming
+  - Difficult to see sequence of messages
+
+### Sequence Diagram Part III
+
+- ![Interaction Diagram](images/Screenshot%202023-05-28%20at%209.14.02%20PM.png)
+  - Accidentally deleted the frame holding the interaction diagram 
+  - the diagram starts with the endpoint of 'new game' 
+  - next the game manager will 'make(Player) and make(scene)
+  - Once the two have been generated the Loop fragment is generated once health > 0 the generate NPCs message is sent over 
+  - Create side object and create traffic vehicle is created 
+  - Next the Alt fragment shows that once value = 0 onCollision(player) is sent to the side object where the side object will send a message to itself to show behavior
+  - The next step will be do applyDamage(damage,cash) back to the playerCar:Player object
+  - More to come on the next model
