@@ -574,11 +574,86 @@ Sequence Vs communication Diagram
 ### Sequence Diagram Part III
 
 - ![Interaction Diagram](images/Screenshot%202023-05-28%20at%209.14.02%20PM.png)
-  - Accidentally deleted the frame holding the interaction diagram 
-  - the diagram starts with the endpoint of 'new game' 
+  - Accidentally deleted the frame holding the interaction diagram
+  - the diagram starts with the endpoint of 'new game'
   - next the game manager will 'make(Player) and make(scene)
-  - Once the two have been generated the Loop fragment is generated once health > 0 the generate NPCs message is sent over 
-  - Create side object and create traffic vehicle is created 
+  - Once the two have been generated the Loop fragment is generated once health > 0 the generate NPCs message is sent over
+  - Create side object and create traffic vehicle is created
   - Next the Alt fragment shows that once value = 0 onCollision(player) is sent to the side object where the side object will send a message to itself to show behavior
   - The next step will be do applyDamage(damage,cash) back to the playerCar:Player object
   - More to come on the next model
+
+### Sequence Diagram Part IV
+
+- ![Part IV Interaction Diagram](images/Screenshot%202023-05-29%20at%203.47.01%20PM.png)
+- New diagram has destroy messages for all of the created objects once the health reaches 0 indicating that the loop needs to be broken out of.
+
+### Scene Class Discussion
+
+New Game implementation, from previous models this was done:
+
+- Choose a vehicle
+  - create instance of the chosen vehicle
+- Create instance of player
+- prepare the scenery
+  - create instance of scene class
+  - assign player reference to Scene class
+- Run a loop until player health is 0
+  - Generate NPCs
+  - Player will drive the car (simulated)
+  - Player will collide with other objects (simulated)
+
+Scene Class
+
+- Responsible for representing a scene
+- Create environment objects (houses, tree, etc)
+- Generate NPCs(vehicles, side objects)
+- Simulate collision between the player and the NPCs
+- ![Class Diagram Change](images/Screenshot%202023-05-29%20at%204.12.47%20PM.png)
+
+
+### State Machine Diagram - I 
+
+- An object's state is the condition in which it exists 
+  - Through the values of its attributes 
+- It can be a passive quality that is used to decide the what the object will do when methods are invoked 
+- It can also be an operation that the object executes 
+
+State Machine Diagram 
+
+- An object's behavior may change based on its state 
+- It's helpful to model such states and the events causing changes 
+- State machine diagram can be used for modeling this behaviour 
+- Part of the logical view of the system 
+- Useful in various fields such as mathematics, AI, games, etc
+  
+State
+
+- A state is drawn as a rounded rectangle 
+- Name starts with a capital letter, at the top
+- May have several compartments to represent other properties of the state
+- State diagrams usually have initial pseudostate and final state
+  - represent start and end points of the state machine 
+
+Transitions 
+
+- Represent the change from one state to the other 
+- Transitions are drawn as arrows connecting states 
+- A trigger causes a state change and is optionally written along the transition arrow
+
+Transition Description 
+
+- Describes the cause of the state change ---trigger[guard]/behavior---->
+- Each element is iptional 
+  - trigger: event that may cause the transition
+  - [guard]: Boolean condition that allows/disallows the transition
+  - behavior: activity that executes while the transition is taking place 
+
+Transitions and Triggers
+
+- The event will be triggered if 
+  - the action is performed 
+  - the guard condition evaluates to true 
+  - the internal behaviour of the state completes 
+
+![Simple State Machine Diagram](images/Screenshot%202023-05-30%20at%202.15.39%20AM.png)
