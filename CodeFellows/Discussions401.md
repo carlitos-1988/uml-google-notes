@@ -24,3 +24,5 @@ Not always working correctly can be interpreted many ways code compiling only me
 How many keywords does Java have? 51 reserved keywords 
 How do you print words to the console in Java? System.out.println("my text");
 
+
+https://redirect.teleparty.com/join/8d104dfecc7e795b
