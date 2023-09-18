@@ -38,6 +38,7 @@
 - The C: drive root folder is what we call a parent directory and the contents inside are considered the child directories
 - `get-Help` `command` `-Full` this will get a full description of the command trying to access help for
 - `ls -Force` to show hidden files when using ls command
+- `get help ls -full` will give you all of the available commands that are available in the command line
 
 ### Linux List Directories
 
@@ -51,7 +52,7 @@
     - `usr`: meant for user installed software
     - `var`: used for system logs or any file that changes on the OS
 - Similar to windows commands and parameters a flag is a way to specify additional options for a command
-- `-- help` flag: used for finding more information on what parameter and how to use a particular command
+- `ls -- help` flag: used for finding more information on what parameter and how to use a particular command
 - `man` `command to look up` : this will give you the manual for the command you want to look at
 - `ls -l` gives long list information in a directory
 - ![ls -l Command ex](ScreenShots/Screenshot%202023-06-09%20at%202.41.20%20AM.png)
@@ -121,7 +122,7 @@
 - `-r` is what needs to be added as a flag when trying to use recursive copy
 - `cp -r 'Cat Pictures' ~/Desktop` to recursively copy over cat pictures directory and contents to the desktop
 
-### Windoes: Moving and Renaming Files, Directories
+### Windows: Moving and Renaming Files, Directories
 
 - `mv` to rename a file
 - `mv .\blue_document.txt(old name) yellow_document.txt(new name)` this will change the name of the document
@@ -205,56 +206,54 @@
   - From Notepad++ press CTRL+SHIFT+F to open the find in files dialog
   - The dialog will give you a gui that will ask you what to search for
 - `sls` will let you look for a string or pattern inside the CLI, this will use regex
-  - `Select-String <word> <file>` will tell you if the word was found and the line number the file was found in 
-  - `Select-String <word> <*.txt>` will search for the word in all .txt files using the asterisks in the file type will allow for this to happen 
-  
-### Windows: Searching Within Directories 
+  - `Select-String <word> <file>` will tell you if the word was found and the line number the file was found in
+  - `Select-String <word> <*.txt>` will search for the word in all .txt files using the asterisks in the file type will allow for this to happen
 
-- `Filter` will help you find within a directory 
-- `ls 'C:\Program Files\' -Recurse -Filter *.exe` this will look for all exe files inside program files recursively 
-- The `-Filter` parameter will filter the results for file names that match a pattern 
+### Windows: Searching Within Directories
 
-### Linux: Searching within Files 
+- `Filter` will help you find within a directory
+- `ls 'C:\Program Files\' -Recurse -Filter *.exe` this will look for all exe files inside program files recursively
+- The `-Filter` parameter will filter the results for file names that match a pattern
 
-- `grep` used to match words within files 
-- `grep <word> farm_animals.txt` will look for a particular word if the * would search in multiple files that match the file type 
+### Linux: Searching within Files
 
+- `grep` used to match words within files
+- `grep <word> farm_animals.txt` will look for a particular word if the \* would search in multiple files that match the file type
 
-### Windows: Input, Output, and the Pipeline 
+### Windows: Input, Output, and the Pipeline
 
-- `echo` is an alias for Write-Output 
-- Input/output steams, There are three of them 
-  - stdin: provide input to the input stream here 
-  - stdout: input data flows out of the process 
-  - stderr: 
+- `echo` is an alias for Write-Output
+- Input/output steams, There are three of them
+  - stdin: provide input to the input stream here
+  - stdout: input data flows out of the process
+  - stderr:
   - `>` redirection operator
-  - `>>` to append to a file 
-  - `|` to send the input of one command to the input of another command 
-    - `cat words.txt | Select-String st` this will return a list of words that contain the word st 
-    - `cat words.txt | Select-String st > st_words.txt` this will grab the output of the file and add it to the st_words file 
-  - `rm secure_file 2> errors.txt` then `cat errors.txt` you will be able to see error messages instead of a print out of the error 
-    - 1: stdout - the output 
-    - 2: stderr- the error 
-    - When adding the number to to the error after the > this will only return the error and not the message 
-  - `$null` variable for nothing --> if the error messages are redirected to $null will return the error messages to nothing 
+  - `>>` to append to a file
+  - `|` to send the input of one command to the input of another command
+    - `cat words.txt | Select-String st` this will return a list of words that contain the word st
+    - `cat words.txt | Select-String st > st_words.txt` this will grab the output of the file and add it to the st_words file
+  - `rm secure_file 2> errors.txt` then `cat errors.txt` you will be able to see error messages instead of a print out of the error
+    - 1: stdout - the output
+    - 2: stderr- the error
+    - When adding the number to to the error after the > this will only return the error and not the message
+  - `$null` variable for nothing --> if the error messages are redirected to $null will return the error messages to nothing
 
+### Linux: Input, Output and Pipeline
 
-### Linux: Input, Output and Pipeline 
-
-- Similar to windows there are 3 different IO streams 
+- Similar to windows there are 3 different IO streams
   - stdin
   - stdout
   - stderr
-- `>` redirection operator still occurs here 
-- `>>` used when trying to append instead of creating or deleting a new file 
-- `2>` is the standard operator for linux 
-- `ls /dir/fake_dir 2> error_output.txt` this will log all of the errors to the output of the file 
-- `cat error_output.txt` will show the errors that were encountered 
-- `<` in Lunyx machine this will redirect the standard input 
-- `/dev/null` file to use as null value 
-- `|`  `ls -la /etc | grep bluetooth` this will take the output of the ls -la and send it to the grep command 
+- `>` redirection operator still occurs here
+- `>>` used when trying to append instead of creating or deleting a new file
+- `2>` is the standard operator for linux
+- `ls /dir/fake_dir 2> error_output.txt` this will log all of the errors to the output of the file
+- `cat error_output.txt` will show the errors that were encountered
+- `<` in Lunyx machine this will redirect the standard input
+- `/dev/null` file to use as null value
+- `|` `ls -la /etc | grep bluetooth` this will take the output of the ls -la and send it to the grep command
 
-### Windows and Linux Advanced Navigation 
+### Windows and Linux Advanced Navigation
 
-- Regular expressions: used to help you do advanced pattern-based selection 
-- 
+- Regular expressions: used to help you do advanced pattern-based selection
+-
