@@ -256,34 +256,255 @@ additional info https://community.chocolatey.org/packages Chocolatey Package Man
 
 ### Additional Resources
 
-  <https://help.launchpad.net/Packaging/PPA> information for launchpad PPAs
+<https://help.launchpad.net/Packaging/PPA> information for launchpad PPAs
 
-  <https://www.gimp.org/downloads/> GIMP installation instructions
+<https://www.gimp.org/downloads/> GIMP installation instructions
 
 ### Windows: Underneath the Hood
 
-- Closed Source Packages, packages where you can't look at the source code to see what the program is doing 
-- to learn how to construct and destruct package installation files go to <Orca.exe> this is part of the windows SDK will help you create and update installer files. 
+- Closed Source Packages, packages where you can't look at the source code to see what the program is doing
+- to learn how to construct and destruct package installation files go to <Orca.exe> this is part of the windows SDK will help you create and update installer files.
 
-### Windows Setting Panel 
+### Windows Setting Panel
 
-- The Windows settings panels allow users to view and change system settings in Windows. Each setting group has a panel that allows changes to several system features. This guide explains the function of each settings panel. 
+- The Windows settings panels allow users to view and change system settings in Windows. Each setting group has a panel that allows changes to several system features. This guide explains the function of each settings panel.
 - <https://drive.google.com/file/d/1RnJ0Xi40ZQKbMoVrcbqn9wp2xSqy_LXo/view>
 
 ### Windows Installers and Process Monitors
 
 - For more information about various ways you can create and edit Windows installer packages, check out the following links
   - <https://learn.microsoft.com/en-us/windows/win32/msi/orca-exe?redirectedfrom=MSDN> Orca
-  - <https://learn.microsoft.com/en-us/sysinternals/downloads/procmon> Process Monitor 
+  - <https://learn.microsoft.com/en-us/sysinternals/downloads/procmon> Process Monitor
   - <https://learn.microsoft.com/en-us/windows/win32/msi/windows-installer-examples?redirectedfrom=MSDN> Windows Installer Examples
 
 ### Linux: Underneath the Hood
 
 - ![Listing Application setup_script](<ScreenShots/Screenshot 2023-09-21 at 3.12.35 PM.png>)
-- this package is simple in nature but the installer will grab the necessary packages 
+- this package is simple in nature but the installer will grab the necessary packages
 
-## Device Software Management 
+## Device Software Management
 
-### Windows: Devices and Drivers 
+### Windows: Devices and Drivers
 
-- Driver, used to help our hardware devices interact with out operating system 
+- Driver, used to help our hardware devices interact with out operating system
+- `devmgt.msc` search from start menu to get to the devices and drivers
+  <https://learn.microsoft.com/en-us/windows-hardware/drivers/install/hardware-ids> Hardware ID
+  <https://learn.microsoft.com/en-us/windows-hardware/drivers/install/step-2--a-driver-for-the-device-is-selected> Step2: A driver package for the device is selected
+
+### Linux: Devices and Drivers
+
+- when a device is connected to a linux machine a file is created in the `/dev` directory
+- common devices
+  - Character Devices like a keyboard or a mouse, transmit data character by character
+  - Block devices like USB drivers, hard drives and CDROMs, transfer blocks of data; a data block is just a unit of data storage
+- `/dev/sda` or `sdb` these are mass storage devices to be used with the linux machine
+- device drivers are not stored in the `/dev` directory sometimes they are part of the linux kernel
+- if a device is not able to be automatically installed on a linux machine the device may come with a kernel module, the module will extend functionality without having to mess with the actual kernel
+- Not all kernel modules are drivers in linux
+
+### Supplemental Reading
+
+-In this reading, you will learn how devices and drivers are managed in Linux. Previously, you learned that in Linux, devices attached to the computer are recognized by the operating system as device files. Devices are located in the /dev directory in Linux. A few examples of devices you may find in the /dev directory include:
+
+/dev/sda - First SCSI drive
+
+/dev/sr0 - First optical disk drive
+
+/dev/usb - USB device
+
+/dev/usbhid - USB mouse
+
+/dev/usb/lp0 - USB printer
+
+/dev/null - discard
+
+Some of the Linux device categories include:
+
+Block devices: Devices that can hold data, such as hard drives, USB drives, and filesystems.
+
+Character devices: Devices that input or output data one character at a time, such as keyboards, monitors, and printers.
+
+Pipe devices: Similar to character devices. However, pipe devices send output to a process running on the Linux machine instead of a monitor or printer.
+
+Socket devices: Similar to pipe devices. However, socket devices help multiple processes communicate with each other.
+
+Installing a device in Linux
+There are hundreds of versions of Linux available due to the fact that Linux is an open source operating system. The methods for installing devices on Linux can vary from version to version. The instructions in this section provide various options for installing a printer and its device drivers on a Red Hat 9 Linux system running the GNOME user interface.
+
+Device autodetect with udev
+
+Udev is a device manager that automatically creates and removes device files in Linux when the associated devices are connected and disconnected. Udev has a daemon running in Linux that listens for kernel messages about devices connecting and disconnecting to the machine.
+
+Installation through a user interface - GNOME
+
+There are multiple user interfaces available for Linux. These instructions are specifically for the GNOME user interface.
+
+In the GNOME user interface, open the Settings menu.
+
+On the left-side menu, select Printers.
+
+Click the Unlock button in the top right corner to change the system settings. Note that your user account must have superuser, sudo, or printadmin privileges to unlock the system settings for printers.
+
+A dialog box will open showing a list of available printers. If your network has a large number of printers, you can search for the printer by IP address or host name.
+
+Select the printer you want to install on the local system and click Add.
+
+The printer listing will appear in the Settings window for the Printers.
+
+In the top right corner of the printer listing, click the Printer Settings icon and select Printer Details from the pop-up menu.
+
+The details of the printer will open in a new window. You should have three options for installing the printer driver:
+
+Search for Drivers: The GNOME Control Center will automatically search for the driver in driver repositories using PackageKit.
+
+Select from Database: Manually select a driver from any databases installed on the Linux system.
+
+Install PPD File: Manually select from a list of postscript printer description (PPD) files, which may be used as printer drivers.
+
+Installation through the command line
+
+Red Hat Linux uses the Common Unix Printing System (CUPS) to manage printers from the command line. CUPS servers broadcast to clients for automatic printer installation on Linux machines. However, for network environments with multiple printers, it may be preferable to manually install specific printers through the command line.
+
+From the command-line, enter $ `lpadmin -p printername -m driverfilename.ppd`
+
+`Lpadmin` is the printer administrator command.
+
+The `-p printername` command adds or modifies the named printer.
+
+The `-m driverfilename.ppd` command installs the postscript printer description (PPD) driver filename that you provide. The file should be stored in the /usr/share/cups/model/ directory.
+
+Enter $ `man lpadmin` to open the manual for the lpadmin command to find additional command line options.
+
+How to check if a device is installed
+There are a couple of methods for checking if a device is already installed on a Linux machine:
+
+Through a user interface like GNOME
+
+In the GNOME user interface, open the Settings menu.
+
+Browse each device set on the left-side menu.
+
+The attached devices of the selected device type will appear in the window pane on the right.
+
+Through the command line
+
+The most common way to check if a device is installed is to use the “ls” (lowercase L and S) command, which means “list”.
+
+$ `ls /dev` - Lists all devices in the /dev folder
+
+$ `lscpci` - Lists devices installed on the PCI bus
+
+$ `lsusb` - Lists devices installed on the USB bus
+
+$ `lsscsi` - Lists SCSI devices, such as hard drives
+
+$ `lpstat -p` - Lists all printers and whether they are enabled
+
+$ `dmesg` - Lists devices recognized by the kernel
+
+### Windows: Operating System Updates
+
+- Security Patch software that is mean to fixup a security hole
+- Windows does a good job to tell you when an update is available and what the update is for
+- it does this by pinging the windows update servers occasionally
+- search updates, -> settings and manage updates based on your preferences
+- updates are commutative meaning that you can download less stuff if you where to miss some updates
+
+### Types of Windows Updates
+
+- Types of Windows updates
+  There are several types of updates that the Windows Update Client might find for your Windows system.
+
+Critical updates address critical bugs that are not security related. These are widely released fixes for a specific problem.
+
+Definition updates are widely released and frequent updates to a product's definition database. Definition databases are used to detect specific types of objects on your system, such as malicious code, phishing websites, or junk mail.
+
+Driver updates: Drivers are software that control the input and output of devices running on your system. This software may be updated when new versions of the driver become available for your devices or if you install a new device on your system.
+
+Feature packs add new product functionality to your system. This functionality is first distributed as an update to a product currently running on your system. It is usually included in the next full product release.
+
+Security updates are widely released patches for a security related vulnerability. Security vulnerabilities are rated by severity as being critical, important, moderate, or low.
+
+a) Critical vulnerabilities pose an active threat. Patch should be installed immediately.
+
+b) Important vulnerabilities pose a likely threat. Patch should be installed as soon as possible.
+
+c) Moderate vulnerabilities pose a potential threat. Patch should be installed soon.
+
+d) Low severity vulnerabilities are not an immediate threat, but a patch is recommended.
+
+Service packs collect all tested hotfixes, security updates, critical updates, and general updates together and distribute them as a set. A service pack also may contain new fixes or design changes requested by customers.
+
+General updates are widely released fixes for specific problems. They address noncritical bugs that are not security related.
+
+Update rollups collect a set of tested hotfixes and updates that target a specific area, such as a component or service. These fixes and updates are packaged together for easy deployment.
+
+Security-only updates collect all the new security updates from a given month for distribution through the Windows Server Update Services (see below). These updates are called “Security Only Quality Update” when you download them and will be rated as “Important.”
+
+New OS: A new version of the Windows operating system may also be deployed through the Windows Update Client. For example, Windows 10 and 11 were both delivered as updates to a previously installed OS.
+
+Key takeaways
+The Windows operating system updates frequently, so it is important that you know how to keep your Windows systems up to date with the most current changes.
+
+Windows operating systems include the Windows Update Client service to help you download and install updates and patches for the operating system.
+
+There are several types of updates that the Windows Update Client might find for your Windows system.
+
+The process for installing updates depends on which version of Windows you’re using.
+
+Regular updates ensure top performance and security for your Windows system.
+
+### Linux: Operating Sytem updates
+
+- `uname` gives us system information with `-r` will tell you what kernel version you are currently running
+- to update `sudo apt update` then sudo apt `full-upgrade` follow prompts then restart computer to be able to use the new kernel
+
+### Supplemental Reading for Linux Update
+
+Linux Update
+Linux is a free, open-source operating system used on a wide variety of computing systems, such as embedded devices, mobile devices including its use in the Android operating system, personal computers, servers, mainframes, and supercomputers. The Linux kernel is the core interface between a device’s hardware and the rest of its processes. The kernel controls all the major functions of hardware running the Linux operating system. To keep the core operating system up to date with current security patches, new features, and bug patches, you need to update the Linux kernel. This reading covers how the Linux kernel functions and how to update Ubuntu, the most common Linux distribution.
+
+Linux kernel
+The Linux kernel is the main component of a Linux operating system (OS). The kernel is software located in the memory that tells the central processing unit (CPU) what to do. The Linux kernel is like a personal assistant for the hardware that relays messages and requests from users to the hardware.
+
+The kernel has four main jobs:
+
+Memory management tracks how much memory is being used by what and where it is stored.
+
+Process management determines which processes can use the central processing unit (CPU), when, and for how long.
+
+Device drivers act as an interpreter between the hardware and processes.
+
+System calls and security receives requests for service from the processes.
+
+To ensure that Linux distribution is running the most current version of the operating system, you will need to update it regularly.
+
+Updating Ubuntu Linux distribution
+A Linux distribution is an operating system (OS) that includes the Linux kernel and usually a package management system. There are almost one thousand Linux distributions, and each distribution has a slightly different way of updating.
+
+The Ubuntu distribution is one of the most popular since it is easy to use. There are two ways to update the Ubuntu distribution:
+
+Update Manager is a graphical user interface (GUI) that is nearly 100% automated. When updates are available, it will open on your desktop and prompt you to complete the updates. It checks for security updates daily and nonsecurity updates weekly. You can also choose to check for updates manually.
+
+Apt is the Ubuntu package management system that uses command line tools to update a Ubuntu distribution. Apt does not check for updates automatically, you must manually run it to check for updates. You can use the following commands to check for updates and upgrade:
+
+apt-get update To update with apt, open the terminal and use the command apt-get update. This command prompts you to enter your password, then it updates the list of system packages.
+
+apt-get upgrade Once the package list is up to date, use the command apt-get upgrade to actually download and install all updated versions for the packages in the list.
+
+Key Takeaways
+Linux is a free open-source operating system used on a wide variety of computing systems.
+
+The kernel is a part of the operating system of Linux and runs communications between the computer’s hardware and its processes.
+
+Unbuntu is the most popular distribution because it is easy to use and update with the update manager or the command sudo apt-get upgrade.
+
+As improvements to the processes are released, Linux needs to be updated to ensure the kernel communicates the right information to the hardware about the process.
+
+Resources for more information
+For more information on updating various distributions of Linux, visit this
+Linux Foundation article.
+
+For more complete command information for using apt in Ubuntu, visit
+Ubuntu’s guide here
+.
