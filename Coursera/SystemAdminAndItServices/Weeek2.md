@@ -114,25 +114,197 @@ Integrated video conferencing, screen sharing, and desktop management apps: Vide
 File sharing and transfer platforms: Cloud storage platforms, like Google Drive, Microsoft OneDrive, and Dropbox, have largely replaced file transfer protocol (FTP) tools. File sharing through a cloud platform provides the benefits of asynchronous file transfers, file transfer and data encryption, customizable security and authentication settings, and the ability to file share with multiple users simultaneously. File owners can share individual files, folders, or entire drives. However, cloud storage might not be an appropriate option for organizations affected by certain privacy laws, regulations, or other security concerns. These organizations can still use FTP applications based on SSH or HTTPS protocols for secure file transfers over the internet.
 
 <https://en.wikipedia.org/wiki/OpenSSH> OpenSSH
-<https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/clients/remote-desktop-clients> remote desktop clients 
+<https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/clients/remote-desktop-clients> remote desktop clients
 <https://en.wikipedia.org/wiki/PuTTY> Putty
-
-
 
 ## Network Services
 
 ### FTP, SFTP, and TFTP
 
-- network services 
-- file transfer service: 
-  - FTP legacy way to transfer files from one computer to another, does not handle data encryption 
-  - FTP service works much like SSH service, clients who want to use an FTP server they have to install a client and FTP server 
-  - FTP is primarily used to serve up web content 
-  - while using a website host provider there might be an FTP connection already available for use. this is because the server can copy files to and from the website. 
-  - SFTP is another option that allows encryption which makes it more secure, data is sent through ssh and it is encrypted 
+- network services
+- file transfer service:
+  - FTP legacy way to transfer files from one computer to another, does not handle data encryption
+  - FTP service works much like SSH service, clients who want to use an FTP server they have to install a client and FTP server
+  - FTP is primarily used to serve up web content
+  - while using a website host provider there might be an FTP connection already available for use. this is because the server can copy files to and from the website.
+  - SFTP is another option that allows encryption which makes it more secure, data is sent through ssh and it is encrypted
   - TFTP no authentication and no encryption, files stored here should be generic and should not have to be secured, popular use of TFTP is to host installation files
-![FTP SFTP TFTP Differences](<screenshotsSysAdmin/Screenshot 2023-10-05 at 9.33.51 PM.png>)
+    ![FTP SFTP TFTP Differences](<screenshotsSysAdmin/Screenshot 2023-10-05 at 9.33.51 PM.png>)
 
-<https://en.wikipedia.org/wiki/Preboot_Execution_Environment> Pre-boot Execution Environment 
+<https://en.wikipedia.org/wiki/Preboot_Execution_Environment> Pre-boot Execution Environment
+
+### NTP
+
+- Network time protocol (NTP), it's used to keep clocks synchronized on machines connected to a network
+- NTP would allow for machines to be able sych the clocks across an organization
+- Public NTP servers, there are organizations that allow for the use of NTP servers and you don't have to set up the server itself
+
+### Network Support Services Revisited
+
+- Intranet an internal network inside a company accessible if your on a company's network
+- Intranets provide a great way for organizations to be able to share information locally sort of like company website that only employees can use
+- Proxy Server, acts as an intermediary between a company's network and the internet
+- They relay network traffic and relay that to the company network, they can be configured to monitor and track network access and allow for blocking of websites
+
+### DNS
+
+- Domain Name System(DNS) maps human-understandable names to IP addresses
+- if not set up correctly no one would be able to set up resources based on the name passed in
+
+### DNS for Web Servers
+
+- to setup a web server you will need to do the following steps
+
+  - buy a domain name e.g settingupDnsisfunc.example.com
+  - weigh all options for committing to an infrastructure service either cloud hosting or local hosting
+  - for local hosting:
+    - grab the DNS settings, typically come from a domain registrar
+    - give IP address of where content is stored
+    - if a domain registrar is not chosen to host web files you would then need to set up an authoritative DNS Server for the web-server
+      ![Architecture](<screenshotsSysAdmin/Screenshot 2023-10-08 at 3.01.46 PM.png>)
+
+### DNS for Internal Networks
+
+- Reminder that we host files in networking allow us to map IP addresses to host names manually. in linux host file is called etc/hosts
+
+### DHCP
+
+- DCHP dynamic host configuration protocol
+- the two options to granting access to computers can either be done by granting a static IP address or DHCP
+- with a static address maintenance of that IP address needs to be done in order to keep track of what IP address a machine is given and if it needs to be modified in any way
+- for DHCP the DHCPOFFER within a DCHP server will give temporary IP addresses to machines that want to be able to connect to the internet, if you need more IP addresses you would only have to deal with the DHCP server and not the individual machines
+- Once DCHP is able to lease out IP addresses the DNS server will update it's IP address mapping the two work together to be able to understand what is being leased out and what is acceptable to use the resources to be directed to resources
 
 ## Troubleshooting Network Services
+
+### Unable to Resolve a Hostname or Domain Name
+
+- check network connection is actually working
+  - `ping www.google.com `
+- DNS, to verify the right address is being returned use NS lookup
+  - `nslookup www.google.com`
+  - verify that the lookup goes to an actual named server
+  - copy the ip address result to a webpage and see if it goes to the right place
+- Check the current host file for configuration
+  - `sudo vim /etc/hosts`
+  - in this file you will see where the IP address for a webpage links to
+
+## Managing System Services
+
+### What do Services Look Like in Action
+
+- DCHP, NTP, DNS run as background processes in other words daemons, this means that the program doesn't neeed to interact with a user through the graphical interface or the command line interface to provide the necessary service
+- Services are usually configured to start when the machine boots, so that if there's a power outage or a similar event that causes the machine to reboot, you wont need a system administrator to manually start the service
+
+### Managing Services in Linux
+
+- NTP allows networked machines to synchronize their clocks
+- `service ntp status` will show you if the service is running and the condition it is in.
+- The daemon managing the time will not interfere to correct time if the time slippage is over 120 milliseconds because it assumes something else is wrong with the system. Anything under 120 milliseconds the NTP server will correct the time slowly
+- `sudo service ntp stop` `sudo service ntp start` by starting and stopping the service on start the time might be able to be corrected to the most current time
+- `sudo ntp restart` to restart the service instead of stopping and starting the service
+
+### Managing Services in Windows
+
+- Windows update service, responsible for checking what updates are available not only for the OS but also the applications that are running on a machine
+- `Get-Service wuauserv` in powershell will launch the windows update service
+- `Get-Service wuauserv | Format-List *` this will list how the service is formatted to run and additional information
+- For this the wuauserv was only an application this can be used for any service running on a computer
+- To stop a service and checking on it
+  - Open powershell as administrator
+  - `Stop-Service wuause ` will stop the service
+  - `Get-Service wuause` this will tell you the status of the service and for this will show as stopped
+  - `Start-Service wuauserv` will begin the service again
+  - `Get-Service wuauserv` will show that the status of the service is now back to running
+  - `Get-Service ` will list all of the services running on the local machine
+- All this can also be done using the services management console
+  - all services will be shown and also show what is running and also stopped
+
+### Configuring Services in Linux
+
+- for this example the vsftp server will be played with
+- `sudo apt install vsftp`
+- once vsftp is installed the service for it begins automatically, this is the case for most applications on linux
+- `service vsftp status ` this will list the service itself, where it is loaded, if it is active, the main PID (process ID), and CGroup
+- LFTP an ftp client program that allows us to connect to an ftp server
+- `lsftp localhost` to start with vstp
+- `ls ` to list contents of the current directory, just like if it was your local machine, but not providing username and password this command would not work
+- `/etc/vsft.conf` going to this location so that you can edit the configuration file so that it does something different in this case allow for anonymous connections
+- `sudo vim /etc/vsftp.conf` open vonfig file in Vim, change anonymous enable from no to yes, save it with `wq`
+- Once the change to the configuration file is made you will need to restart that service because the service uses the config at startup and keeps it in memory
+- `Reload`, The service re-reads the configuration without having to stop and start
+- This way ongoing connections will not have to restart but new connections will be able to use the configuration from the new file changes
+- `sudo service vsftp reload` to be able to reload the service
+- now the vsftp service will be able to run with the changes to the configuration file
+
+### Configuring Services in Windows
+
+- So far in the last linux module we have:
+  - Start a service
+  - Stop a service
+  - Restart a service
+  - Modify configuration files of a service
+  - Reload a service
+- for Windows the internet Information Services will be used, it is used to serve up web pages
+- in control panel go to turn features on and off
+- This will open the server manager click next 3x, look for Web Server (IIS) -> add features next x4, select install
+- a new IIS service show on the left pane of the Service Manager
+- Right click on the new IIS service and select Internet Information Services Manager
+- expand on the server, click on sites, this will list the website handled by this server, one default site will appear.
+- go to where you have your host files and copy them over to `C:\inetpub` after this paste the files here, Once pasted go back to IIS Manager go to sites on the left pane right click, select add website, fill in the blanks and select the host files from the inetpud directory
+- Once you have added the site you can go to localhost and whatever port you added for that site 
+
+### reminder Commands 
+
+`sudo` <command>: executes a command with administrator rights
+`ls` <directory>: lists the files in a directory
+`mv` <old_name> <new_name>: moves or renames a file from the old name to the new name
+`tail` <file>: shows the last lines of a file
+`cat` <file>: prints the whole contents of a file
+`grep` <pattern> <file>: filters the text of a file according to the pattern
+`less` <file>: lets you browse a file
+
+Additionally, you can combine these commands using the | sign. For example:
+`sudo cat /var/log/syslog | grep error | tail`
+ 
+## Configuring Network Services 
+
+### Configuring DNS with Dnsmasq
+
+- In large enterprise deployments there are different programs running different services covered in this module, smaller organizations will likely use one server for most of the services covered in this module 
+- DNSMASQ, a program that provides DNS, DHCP, TFTP and PXE services in a simple package 
+- `sudo apt install dnsmasq` once installed it runs and it is enabled with minimum configurations 
+- `dig` allows you to query dns servers and answers 
+- `dig www.example.com @localhost` the part after the @ sign will let you know what DNS server you would like to use, it will give you also give you the IP address of the DNS server 
+- `sudo service dnsmask stop`
+- `sudo dnsmaq -d -q` by passing d and q it will run the command in debug mode and log the queries 
+- in another console run `dig www.example.com @localhost` this will output tot the other terminal 
+
+### Configuring DHCP with DnsMasq
+
+- DNSMasq can be used for other networking services
+- A DNS server can be setup on a machine that has a static IP address configured to the network interface to serve the DHCP queries 
+- In real life the DHCP server and the DHCP client usually run on two different machines 
+- `ip address show eth srv`  will show that the interface has the static IP address the /24 the /24 will show that the available addresses are from .0 to .255
+- this will also have an IPV6 address configured but will not be used 
+- `ip address show eth_cli` this will show that it does not have an IPV4 address configured which can later be adjusted 
+- `cat dhcp.config` will show the items in the configuration file 
+- in the file the interface=eth srv will tell the DHCP to listen on the eth interface 
+- the bind-interface tells us not to listen on any other interfaces for any kind of queries 
+- domain=example will tell you the domain name 
+- 2 dhcp=option will let others know what to configure as a DHCP gateway 
+- dhcp-range = will tell you the range of IP addresses the DHCP server can hand out 
+- there will be a time at the end for this example that tells you how many hours can a DHCP lease an IP address for 
+- `sudo dnsmasq -d -q -c dhcp.config` to let the dhcp server to use the configuration file 
+- On a second terminal `sudo dhcpclient -i eth_cli -v` this will list all of the information that is going to the client mainly to focus on what Ip address was sent to it and the lease renewal time 
+- `ip address show etch_cl` will show the actual IP address assigned to the machine  
+
+<https://docs.google.com/document/d/1IlMrKgWltH37bYCJGCWJIZZwT7Y05fsuxsHL7tq_CJ4/edit?resourcekey=0-hHy8_8D70uuhcIBOtVs2ew> dnsmasq Reference guide for installing and configuring DNS and DHCP for the local network 
+
+### Lab Notes 
+
+When experimenting with changes in a service, it's a good idea to enable debug logging so that we can understand what's going on and why.
+
+dnsmasq is running as a daemon in the background. We can query the status using the service command learned in the previous lesson:
+
+`sudo service dnsmasq status`
