@@ -177,12 +177,137 @@
 - the group policy Object will hold all of the policies in the domain
 - the WMI will define targeting roles for your GPO
 - before making changes to a GPO make sure you have started a backup
+- WMI Filters define powerful targeting roles for your GPOs
+-
 
-### Group Policy Inheritance and Precedence 
+### Group Policy Inheritance and Precedence
 
 - when a computer is processing the Group Policy Object that apply to it, all these policies will be applied in precedence rules
 - There are link order numbers in the GPO if there are contradictions the GPOs there are precedence rules
 
+### User Accounts and Groups 2nd attempt?
+
+- Two categories of group in AD, the most common one, and used is a Security group, can contain user accounts computer accounts or other security groups
+- The other type of group is a a distribution group, only designed to group accounts and contact for email communication
+- you cant use distribution groups for assigning permissions to resources
+- Group scope, has to do with the way that group definitions are replicated across domains
+- AD gives us the ability to manage groups differently since it can be a complicated task to manage
+- Group scopes have the following separations:
+  - Domain local: this is used to assign permissions to a resource
+  - Global, this is used to group accounts into a role
+  - Universal, this is used to group global roles in a forest
+
+### Group Policy Troubleshooting
+
+- troubleshooting issues with active directory may be necessary
+- One of the most common issues you might encounter is when a user isin't able to login to their computer, isin't able to authenticate to the Active Directory domain
+- There are many reasons this may happen but make sure you ask the right questions that would put the failure under the same conditions under which the failure occurred
+- with user account authentication here are some common failures:
+  - user forgot password and locked their account
+  - a computer may not be able find the AD controller
+  - A computer may not be able to find the DNS server for the AD Controller
+- The SRV records that we're interested in are `ldap.tcp.dc_msdcs.DOMAIN.NAME` where domain name is the DNS name of our domain
+- `Resolve-DNSName -Type SRV -Name _ladp._tcp._msdcs.example.com` this will give you the SRV record for each of the domain controllers
+- Kerberos is sensitive to time differences, Kerberos is used by AD and this could be a problem when trying to authenticate
+- Kerberos will fail if to connect if the UTC time is not synched correctly
+- to resync the clocks use `w32tm/resync`
+
+### Group Policy Troubleshooting: Common Issues
+
+- A common issue that you might have to troubleshoot is when a GPO-defined policy or preference fails to apply to a computer
+- The problem here may be that the GPO may require something to be configured but not available or configured on that computer
+- Most common GPO failure deals with the way group policies are applied,depending on how the domain is configured the group policy engine that applies policy settings to the local machine may sacrifice the immediate application of some types of policies in order to make logon faster
+- `gpupdate/force` to force the GPO policies to update instead of waiting for the policies to partially update
+- when changes to AD are made they mainly apply locally and changed to domain controllers will take some time to replicate across other domain controllers
+- if you have a replication issue understanding what DNS server you are using could be helpful in troubleshooting
+- Using Group Policy Management you can run a test to see what the status of replicating updated group policies may be
+- `gp result /H test.html` to get a report
+
+Group Policy Troubleshooting
+This reading expands upon a previous topic on various approaches to troubleshooting common Group Policy problems.
+
+Group Policy Object (GPO): A set of Active Directory (AD) Group Policy configurations that controls the appearance and behaviors for groups of computer systems and/or groups of end users.
+
+Group Policy Management Console (GPMC): A console that is used to create, manage, edit, and link GPOs. The GPMC provides thousands of options for computer and user settings such as Control Panel items, Registry settings, and environmental variables. Policy settings are refreshed every 90 minutes, so changes are not applied immediately. The GPMC can be used to create GPOs that control registry-based policies and software installations, as well as options for:
+
+security
+
+maintenance
+
+scripts
+
+folder redirection
+
+Active Directory (AD) containers: AD containers can be linked to GPOs. AD containers include:
+
+Sites: Physical sites or aspects of a network, which are linked to AD Domains. Can be used to group and connect geographically dispersed locations into the same domain.
+
+Domain: A collection of objects in an AD network, such as computers, users, and groups. Can contain multiple AD Sites and be linked to multiple GPOs.
+
+Organizational Unit (OU): Collectively groups end users, computers, groups, and/or other OUs. OUs can reflect an organization’s hierarchy and business divisions. For example, an organization might have separate OUs for executives, administration, accounting, IT, sales, marketing, vendors, etc.
+
+GPOs process order: Windows will apply GPOs in the following order: 1) The Local GPO 2) GPOs linked to Sites 3) GPOs linked to Domains 4) GPOs linked to OUs
+
+Resultant Set of Policies (RSoPs): A report of AD Group Policy settings that indicates how all GPO settings are hierarchically inherited by end users and computers. RSoP reports can be collected for evaluation using RSoPs logging.
+
+Windows Management Infrastructure (MI) and Windows Management Instrumentation (WMI): MI is the next generation of WMI. However, both MI and WMI are fully supported by Microsoft and MI is backwards-compatible with WMI. MI/WMI provide the operations infrastructure and management data in Windows. They also are used for scripting administrative tasks to run on remote systems
+
+Group Policy troubleshooting tools 
+The following command line tools can be used for troubleshooting Group Policy issues:
+
+gpresult: Displays the RSoP report or values for a computer and user account. This information can help to ascertain which configuration settings have been applied and which settings were overridden. A few of the switches available to the gpresult command include:
+
+/s host - Displays the RSoP values of a remote computer.
+
+/u user-account - Displays the RSoP values of an end-user.
+
+/p password - Displays the RSoP values of an end-user password policy.
+
+/r - Displays the RSoP summary of applied GPOs.
+
+/z - Turns on verbose mode to display details of the RSoP applied settings.
+
+gpedit: The Group Policy Editor, which is a robust tool for changing Registry settings related to the Control Panel, Settings, user profiles, system configurations, third-party software, and more. 
+
+gpupdate: Command that can be used to force a new or edited GPO to be applied immediately using the /force switch. If the policy setting requires the users to logoff or reboot, the switches /logoff or /boot can be added to the command.
+
+Additionally, system event logs are important tools for most Windows troubleshooting issues:
+
+Event Viewer and Windows Logs: The Windows Event Viewer is an invaluable tool for viewing Windows Logs. These tools help IT Support specialists track system problems and events related to items like applications, user logins, security, and systems. To open the Windows Event Viewer, click on the Start menu and type “Event Viewer”. Any error messages or codes found in the logs can be investigated using the Microsoft Knowledge Base (support.microsoft.com), as well as through an internet search. The main Windows Logs include:
+
+System log: Records Windows OS events like hardware conflicts, driver load failures, service load failures, network issues, and more.
+
+Application log: Records application processes and utilities events/errors.
+
+Security log: Records system security audit information.
+
+Setup log: Records installation events and errors.
+
 ## Open LDAP
+
+### What is Open LDAP? 
+
+- Lightweight Directory Access Protocol, can do the same things you can do with AD 
+- Can be used on any operating system
+- `sudo apt-get install slapd ldap-utils` to download and install LDAP
+- create a new admin password 
+- `sudo dpkg-reconfigure slapd` to configure the slapd package 
+- Once configured the LDAP is configured and able to do it's job
+
+<https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-openldap-and-phpldapadmin-on-ubuntu-16-04> How to Install and Configure OpenLDAP
+
+<https://www.openldap.org/doc/admin24/slapdconf2.html> Configuring slapd
+
+### Managing OpenLDAP
+
+- ldapadd, thekes the input of an LDIF file and adds the context of the files 
+- ldapmodify, modifies an existing object 
+- ldapdelete, will remove the object that the LDIF file refers to 
+- ldapsearch, will search for entries in your directory database 
+- directory services are great for centralized authentication 
+
+<https://en.wikipedia.org/wiki/LDAP_Data_Interchange_Format> LDAP Data Interchange Format
+
+<https://www.digitalocean.com/community/tutorials/how-to-use-ldif-files-to-make-changes-to-an-openldap-system> How to Use LDIF Files to Make Changes to an OpenLDAP System
 
 ## Graded Assessments
